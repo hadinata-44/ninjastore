@@ -142,7 +142,7 @@
   <h1>Ninja Store - Top Up Free Fire</h1>
 </header>
 
-<div class="container">
+<div class="container" id="form-section">
   <h2>List Top Up</h2>
   <h2>Kecepatan Masuk 1 - 10 menit</h2> 
   <p>Buka Dari Jam 8.00 - 22.00 WIB</p>
@@ -222,8 +222,7 @@
     updateStruk();
     document.getElementById('diamondList').style.display = 'none';
     document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
-    // Auto scroll ke bagian struk
-    document.getElementById('struk').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('playerId').scrollIntoView({ behavior: 'smooth' }); // Scroll ke form
   }
 
   function pilihMembership(tipe, harga) {
@@ -232,8 +231,7 @@
     updateStruk();
     document.getElementById('membershipList').style.display = 'none';
     document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
-    // Auto scroll ke bagian struk
-    document.getElementById('struk').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('playerId').scrollIntoView({ behavior: 'smooth' }); // Scroll ke form
   }
 
   function formatRupiah(angka) {
