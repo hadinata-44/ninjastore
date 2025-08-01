@@ -6,11 +6,7 @@
   <title>Ninja Store - Top Up FF</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -29,11 +25,7 @@
       z-index: 100;
     }
 
-    header h1 {
-      font-size: 22px;
-      font-weight: 600;
-      text-align: center;
-    }
+    header h1 { font-size: 22px; font-weight: 600; text-align: center; }
 
     .container {
       max-width: 500px;
@@ -55,7 +47,8 @@
       border: 1px solid rgba(255,255,255,0.2);
       animation: fadeInDown 0.6s ease-out;
     }
-.info-title {
+
+    .info-title {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
@@ -68,7 +61,6 @@
       margin-bottom: 8px;
       color: #f0f0f0;
       animation: naikTurun 4s ease-in-out infinite;
-
     }
 
     .info-jam {
@@ -117,9 +109,7 @@
       margin-top: 10px;
     }
 
-    button:hover {
-      background-color: #e5e5e5;
-    }
+    button:hover { background-color: #e5e5e5; }
 
     .struk {
       margin-top: 20px;
@@ -149,9 +139,7 @@
       border: 2px solid transparent;
     }
 
-    .diamond-card:hover {
-      background-color: #004080;
-    }
+    .diamond-card:hover { background-color: #004080; }
 
     .diamond-card.selected {
       border: 2px solid #00ffcc;
@@ -159,24 +147,12 @@
       background-color: #005f99;
     }
 
-    .diamond-card .jumlah {
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .diamond-card .harga {
-      font-size: 16px;
-      color: #aad4ff;
-    }
+    .diamond-card .jumlah { font-size: 15px; font-weight: bold; }
+    .diamond-card .harga { font-size: 16px; color: #aad4ff; }
 
     @media (max-width: 600px) {
-      .container {
-        margin: 15px;
-        padding: 20px;
-      }
-      header h1 {
-        font-size: 18px;
-      }
+      .container { margin: 15px; padding: 20px; }
+      header h1 { font-size: 18px; }
     }
   </style>
 </head>
@@ -232,16 +208,14 @@
     "Bulanan": 88000,
   };
 
-  const diamondListEl = document.getElementById("diamondList");
-  diamondListEl.innerHTML = Object.entries(hargaAsli).map(([jumlah, harga]) => {
+  document.getElementById("diamondList").innerHTML = Object.entries(hargaAsli).map(([jumlah, harga]) => {
     return `<div class="diamond-card" onclick="pilihDiamond(this, ${jumlah}, ${harga})">
               <div class="jumlah">${jumlah} Diamonds</div>
               <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
             </div>`;
   }).join('');
 
-  const membershipListEl = document.getElementById("membershipList");
-  membershipListEl.innerHTML = Object.entries(hargaMembership).map(([tipe, harga]) => {
+  document.getElementById("membershipList").innerHTML = Object.entries(hargaMembership).map(([tipe, harga]) => {
     return `<div class="diamond-card" onclick="pilihMembership(this, '${tipe}', ${harga})">
               <div class="jumlah">Membership ${tipe}</div>
               <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
@@ -269,8 +243,6 @@
     el.classList.add('selected');
     document.querySelectorAll('#membershipList .diamond-card').forEach(card => card.classList.remove('selected'));
     updateStruk();
-    document.getElementById('diamondList').style.display = 'none';
-    document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
     document.getElementById('promo').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -281,8 +253,6 @@
     el.classList.add('selected');
     document.querySelectorAll('#diamondList .diamond-card').forEach(card => card.classList.remove('selected'));
     updateStruk();
-    document.getElementById('membershipList').style.display = 'none';
-    document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
     document.getElementById('promo').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -325,7 +295,7 @@ Produk : ${produk}
 *Harga Akhir* : ${formatRupiah(harga)}
 *BAYAR TF* : ${payment} (${nomorDana})
 
-*HARUS DILAKUKAN CUSTOMER*:
+*HARUS DILAKUKAN CUSTOMER* :
 transfer ke nomor dana yang ada diatas terlebih dahulu, setelah ditransfer langsung screenshot dan tunjukan bukti screenshot nya baru akan di proses.
 
 Terima kasih telah order di Ninja Store!`;
