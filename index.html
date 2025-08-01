@@ -108,10 +108,18 @@
       color: white;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
       cursor: pointer;
+      transition: 0.3s ease;
+      border: 2px solid transparent;
     }
 
     .diamond-card:hover {
       background-color: #004080;
+    }
+
+    .diamond-card.selected {
+      border: 2px solid #00ffcc;
+      box-shadow: 0 0 10px #00ffd5;
+      background-color: #005f99;
     }
 
     .diamond-card .jumlah {
@@ -144,7 +152,7 @@
 
 <div class="container" id="form-section">
   <h2>List Top Up</h2>
-  <h2>Kecepatan Masuk 1 - 10 menit</h2> 
+  <h2>Masuk 1 - 10 menit</h2> 
   <p>Buka Dari Jam 8.00 - 22.00 WIB</p>
 
   <label for="playerId">ID Player Free Fire:</label>
@@ -188,7 +196,7 @@
 
   const diamondListEl = document.getElementById("diamondList");
   diamondListEl.innerHTML = Object.entries(hargaAsli).map(([jumlah, harga]) => {
-    return `<div class="diamond-card" onclick="pilihDiamond(${jumlah}, ${harga})">
+    return `<div class="diamond-card" onclick="pilihDiamond(this, ${jumlah}, ${harga})">
               <div class="jumlah">${jumlah} Diamonds</div>
               <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
             </div>`;
@@ -196,7 +204,7 @@
 
   const membershipListEl = document.getElementById("membershipList");
   membershipListEl.innerHTML = Object.entries(hargaMembership).map(([tipe, harga]) => {
-    return `<div class="diamond-card" onclick="pilihMembership('${tipe}', ${harga})">
+    return `<div class="diamond-card" onclick="pilihMembership(this, '${tipe}', ${harga})">
               <div class="jumlah">Membership ${tipe}</div>
               <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
             </div>`;
@@ -216,18 +224,24 @@
     btn.innerText = list.style.display === 'grid' ? 'Sembunyikan Pilihan Membership' : 'Tampilkan Pilihan Membership';
   }
 
-  function pilihDiamond(jumlah, harga) {
+  function pilihDiamond(el, jumlah, harga) {
     document.getElementById('diamond').value = jumlah;
     document.getElementById('membership').value = '';
+    document.querySelectorAll('#diamondList .diamond-card').forEach(card => card.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelectorAll('#membershipList .diamond-card').forEach(card => card.classList.remove('selected'));
     updateStruk();
     document.getElementById('diamondList').style.display = 'none';
     document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
     document.getElementById('promo').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  function pilihMembership(tipe, harga) {
+  function pilihMembership(el, tipe, harga) {
     document.getElementById('membership').value = tipe;
     document.getElementById('diamond').value = '';
+    document.querySelectorAll('#membershipList .diamond-card').forEach(card => card.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelectorAll('#diamondList .diamond-card').forEach(card => card.classList.remove('selected'));
     updateStruk();
     document.getElementById('membershipList').style.display = 'none';
     document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
@@ -269,10 +283,12 @@
 ${promoText}
 ID Player : ${id}
 Produk : ${produk}
+
 *Harga Akhir* : ${formatRupiah(harga)}
 *BAYAR TF* : ${payment} (${nomorDana})
 
-Silahkan transfer terlebih dahulu sebelum diproses, setelah ditransfer langsung screenshot dan tunjukan bukti screenshot nya.
+*YANG HARUS DILAKUKAN CUSTOMER*:
+transfer ke nomor dana yang ada diatas terlebih dahulu, setelah ditransfer langsung screenshot dan tunjukan bukti screenshot nya baru akan di proses.
 
 Terima kasih telah order di Ninja Store!`;
 
