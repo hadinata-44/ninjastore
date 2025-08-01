@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ninja Store - Top Up FF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #3BA9FF, #005FAD);
+      color: white;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #ffffff;
+      color: #3BA9FF;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #e5e5e5;
+    }
+
+    .struk {
+      margin-top: 20px;
+      background-color: rgba(255,255,255,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+
+    .diamond-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .diamond-card {
+      background-color: #003366;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }
+
+    .diamond-card:hover {
+      background-color: #004080;
+    }
+
+    .diamond-card .jumlah {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .diamond-card .harga {
+      font-size: 16px;
+      color: #aad4ff;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Ninja Store - Top Up Free Fire</h1>
+</header>
+
+<div class="container">
+  <h2>List Top Up</h2>
+  <h2>Kecepatan Masuk 1 - 10 menit</h2> 
+</h>Buka Dari Jam 8.00 - 22.00 WIB</h>
+
+  <label for="playerId">ID Player Free Fire:</label>
+  <input type="text" id="playerId" placeholder="Masukkan ID FF" required oninput="updateStruk()" />
+
+  <label>Pilihan Diamond dan Membership:</label>
+  <button onclick="toggleDiamondList()" style="background-color:#004080; color:white;">Tampilkan Pilihan Diamond</button>
+  <div class="diamond-container" id="diamondList" style="display:none;"></div>
+
+  <button onclick="toggleMembershipList()" style="background-color:#004080; color:white;">Tampilkan Pilihan Membership</button>
+  <div class="diamond-container" id="membershipList" style="display:none;"></div>
+
+  <input type="hidden" id="diamond" />
+  <input type="hidden" id="membership" />
+
+  <label for="promo">Kode Promo (Opsional):</label>
+  <input type="text" id="promo" placeholder="Masukkan kode promo" oninput="updateStruk()" />
+
+  <label for="payment">Metode Pembayaran:</label>
+  <select id="payment" required onchange="updateStruk()">
+    <option value="DANA">DANA - 0852 6640 5894</option>
+  </select>
+
+  <button type="button" onclick="kirimWhatsApp()">Konfirmasi & Kirim ke WhatsApp</button>
+  <div id="struk" class="struk"></div>
+</div>
+
+<script>
+  const kodePromoAktif = "NINJADISKON";
+
+  const hargaAsli = {
+    70: 9899, 140: 19277, 210: 28899, 280: 38899, 355: 48000,
+    425: 58000, 495: 68000, 565: 78000, 635: 87000, 720: 95000,
+    800:107000, 860:115000, 930:125000, 1000:135000
+  };
+
+  const hargaMembership = {
+    "Mingguan": 28420,
+    "Bulanan": 88000,
+  };
+
+  const diamondListEl = document.getElementById("diamondList");
+  diamondListEl.innerHTML = Object.entries(hargaAsli).map(([jumlah, harga]) => {
+    return `<div class="diamond-card" onclick="pilihDiamond(${jumlah}, ${harga})">
+              <div class="jumlah">${jumlah} Diamonds</div>
+              <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
+            </div>`;
+  }).join('');
+
+  const membershipListEl = document.getElementById("membershipList");
+  membershipListEl.innerHTML = Object.entries(hargaMembership).map(([tipe, harga]) => {
+    return `<div class="diamond-card" onclick="pilihMembership('${tipe}', ${harga})">
+              <div class="jumlah">Membership ${tipe}</div>
+              <div class="harga">Rp ${harga.toLocaleString('id-ID')}</div>
+            </div>`;
+  }).join('');
+
+  function toggleDiamondList() {
+    const list = document.getElementById('diamondList');
+    const btn = event.target;
+    list.style.display = list.style.display === 'none' ? 'grid' : 'none';
+    btn.innerText = list.style.display === 'grid' ? 'Sembunyikan Pilihan Diamond' : 'Tampilkan Pilihan Diamond';
+  }
+
+  function toggleMembershipList() {
+    const list = document.getElementById('membershipList');
+    const btn = event.target;
+    list.style.display = list.style.display === 'none' ? 'grid' : 'none';
+    btn.innerText = list.style.display === 'grid' ? 'Sembunyikan Pilihan Membership' : 'Tampilkan Pilihan Membership';
+  }
+
+  function pilihDiamond(jumlah, harga) {
+    document.getElementById('diamond').value = jumlah;
+    document.getElementById('membership').value = '';
+    updateStruk();
+    document.getElementById('diamondList').style.display = 'none';
+    document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
+  }
+
+  function pilihMembership(tipe, harga) {
+    document.getElementById('membership').value = tipe;
+    document.getElementById('diamond').value = '';
+    updateStruk();
+    document.getElementById('membershipList').style.display = 'none';
+    document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
+  }
+
+  function formatRupiah(angka) {
+    return "Rp" + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function updateStruk() {
+    const id = document.getElementById('playerId').value.trim();
+    const diamond = document.getElementById('diamond').value;
+    const membership = document.getElementById('membership').value;
+    const payment = document.getElementById('payment').value;
+    const kode = document.getElementById('promo').value.trim();
+    const nomorDana = '0852 6640 5894';
+
+    if (!id || (!diamond && !membership) || !payment) {
+      document.getElementById('struk').innerText = '';
+      return;
+    }
+
+    let harga = diamond ? hargaAsli[diamond] : hargaMembership[membership];
+    let potongan = 0;
+    let promoText = '';
+
+    if (kode.toUpperCase() === kodePromoAktif) {
+      potongan = Math.floor(harga * 0.05);
+      harga -= potongan;
+      promoText = `✅ Kode promo berhasil, Diskon 5% (-${formatRupiah(potongan)})\n`;
+    } else if (kode !== '') {
+      promoText = `❌ Kode promo tidak valid\n`;
+    }
+
+    const produk = diamond ? `${diamond} Diamonds` : `Membership ${membership}`;
+    const struk = `=== Struk TopUp Free Fire ===
+
+${promoText}
+ID Player : ${id}
+Produk : ${produk}
+*Harga Akhir* : ${formatRupiah(harga)}
+*BAYAR TF* : ${payment} (${nomorDana})
+
+Silahkan transfer terlebih dahulu sebelum diproses, setelah ditransfer langsung screenshot dan tunjukan bukti screenshot nya.
+
+Terima kasih telah order di Ninja Store!`;
+
+    document.getElementById('struk').innerText = struk;
+  }
+
+  function kirimWhatsApp() {
+    const id = document.getElementById('playerId').value.trim();
+    const diamond = document.getElementById('diamond').value;
+    const membership = document.getElementById('membership').value;
+    const payment = document.getElementById('payment').value;
+    const nomorWA = '6285768101358';
+
+    if (!id || (!diamond && !membership) || !payment) {
+      alert("Harap lengkapi semua data!");
+      return;
+    }
+
+    updateStruk();
+
+    const struk = document.getElementById('struk').innerText;
+    const encodedStruk = encodeURIComponent(struk);
+    const waLink = `https://wa.me/${nomorWA}?text=${encodedStruk}`;
+    window.location.href = waLink;
+  }
+</script>
+
+</body>
+</html>
