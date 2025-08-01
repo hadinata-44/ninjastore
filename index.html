@@ -145,7 +145,7 @@
 <div class="container">
   <h2>List Top Up</h2>
   <h2>Kecepatan Masuk 1 - 10 menit</h2> 
-</h>Buka Dari Jam 8.00 - 22.00 WIB</h>
+  <p>Buka Dari Jam 8.00 - 22.00 WIB</p>
 
   <label for="playerId">ID Player Free Fire:</label>
   <input type="text" id="playerId" placeholder="Masukkan ID FF" required oninput="updateStruk()" />
@@ -178,7 +178,7 @@
   const hargaAsli = {
     70: 9899, 140: 19277, 210: 28899, 280: 38899, 355: 48000,
     425: 58000, 495: 68000, 565: 78000, 635: 87000, 720: 95000,
-    800:107000, 860:115000, 930:125000, 1000:135000
+    800: 107000, 860: 115000, 930: 125000, 1000: 135000
   };
 
   const hargaMembership = {
@@ -222,6 +222,8 @@
     updateStruk();
     document.getElementById('diamondList').style.display = 'none';
     document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
+    // Auto scroll ke bagian struk
+    document.getElementById('struk').scrollIntoView({ behavior: 'smooth' });
   }
 
   function pilihMembership(tipe, harga) {
@@ -230,6 +232,8 @@
     updateStruk();
     document.getElementById('membershipList').style.display = 'none';
     document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
+    // Auto scroll ke bagian struk
+    document.getElementById('struk').scrollIntoView({ behavior: 'smooth' });
   }
 
   function formatRupiah(angka) {
