@@ -95,7 +95,7 @@
 
     .diamond-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 15px;
       margin-top: 10px;
     }
@@ -222,7 +222,7 @@
     updateStruk();
     document.getElementById('diamondList').style.display = 'none';
     document.querySelector('button[onclick="toggleDiamondList()"]').innerText = 'Tampilkan Pilihan Diamond';
-    document.getElementById('playerId').scrollIntoView({ behavior: 'smooth' }); // Scroll ke form
+    document.getElementById('promo').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function pilihMembership(tipe, harga) {
@@ -231,7 +231,7 @@
     updateStruk();
     document.getElementById('membershipList').style.display = 'none';
     document.querySelector('button[onclick="toggleMembershipList()"]').innerText = 'Tampilkan Pilihan Membership';
-    document.getElementById('playerId').scrollIntoView({ behavior: 'smooth' }); // Scroll ke form
+    document.getElementById('promo').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function formatRupiah(angka) {
